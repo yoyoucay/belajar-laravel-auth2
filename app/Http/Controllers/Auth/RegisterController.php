@@ -91,4 +91,30 @@ class RegisterController extends Controller
 
         Mail::to($user->email)->send(new userRegistered($user));
     }
+
+    /*
+      Verify token dari email
+
+    */
+    public function verify_register($token , $id){
+
+      // Menampilkan data user
+      $user = User::find($id);
+
+      // Menguji
+      if ($user->token != $token) {
+        return redirect('login')->with('warning','Token not match dude!');
+      }
+
+
+      // Mengubah status user jadi 1
+        $user->status = 1;
+        $user->save();
+
+      // login
+      $this->guard()->login($user);
+
+      // Redirect profile
+      return redirect('home');
+    }
 }

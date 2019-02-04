@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -16,5 +17,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::get('/verify/{token}/{id}', 'Auth\RegisterController@verify_register')->name('verify');
 
 Route::get('/home', 'HomeController@index')->name('home');
